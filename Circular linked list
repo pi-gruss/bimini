@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node 
+{
+	int num;                        
+	struct node *next;
+}Node;       
+
+Node *createlist()                    //创建链表
+{
+	Node *p,*tt,*head;	
+	int i,x;
+
+	head=(Node*)malloc(sizeof(Node));		
+	head->next=NULL;
+	p=head;
+	
+	printf("please input length\n");
+	scanf("%d",&x);
+
+	printf("input date\n");
+	for(i=0;i<x;i++)
+	{
+		tt=(Node*)malloc(sizeof(Node));
+		scanf("%6d",&tt->num);
+		p->next=tt;
+		p=tt;
+	}
+	tt->next=head;								//将单链表首尾相连
+	return head;	
+}
+
+void print(Node *head)				//打印链表
+{
+	Node *p;
+	p=head->next;
+	while(p!=head)
+	{
+		printf("%d ",p->num);
+		p=p->next;
+	}
+	printf("\n");
+}
+
+int main(void)
+{
+	Node *head;
+	head=createlist();
+	print(head);
+}
