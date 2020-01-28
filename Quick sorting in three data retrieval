@@ -1,0 +1,78 @@
+#include<stdio.h> 
+int num[10];	//全局变量
+
+void swap(int a,int b)	//交换函数
+{
+	int t;
+	t = num[a];
+	num[a] = num[b];
+	num[b] = t;
+}
+
+void search(int left,int right)	//完成三位排序,大小为num[left]<num[mid]<num[right],并且将num[mid]和num[right-1]交换
+{
+	int mid;
+	mid = (left+right) / 2;
+	if (num[left] > num[right])
+	{
+		swap(left, right);
+	}
+	if (num[left] > num[mid])
+	{
+		swap(left, mid);
+	}
+	if (num[mid] > num[right])
+	{
+		swap(mid, right);
+	}
+	swap(right-1,mid);
+}
+
+void quick(int left,int right)//快速排列
+{
+	if(left<right)
+	{
+	search(left,right);
+
+	int cc=right-1;
+	int i=left;
+	int j=right-1;
+
+	while(i!=j)
+	{
+		while(num[i]<=num[cc]&&i<j)	//从左边开始扫描到大于枢纽值的数
+			i++;	
+		while(num[j]>=num[cc] && i<j)//从右边开始扫描到小于枢纽值的数
+			j--;	
+		if(i<j)		//交换两数的值
+			swap(i,j);
+		else
+			break;
+		}
+	if(i==j)	//如果指针指到同一位置，交换num[i]和num[cc]的值
+	swap(i,cc);
+
+	quick(left,i-1);		//递归处理左侧
+	quick(i+1,right);		//递归处理右侧
+	}
+}
+
+int main(void)
+{
+	int i;
+	printf("输入数据:\n");
+
+	for(i = 0;i<10;i++)
+	{
+		scanf("%d",&num[i]);
+	}
+
+	quick(0,9);
+
+	for(i = 0;i<10;i++)
+	{
+		printf("%d ",num[i]);
+	}	
+	return 0;
+}
+
