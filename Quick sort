@@ -1,0 +1,52 @@
+#include <stdio.h>
+int a[10]; //定义全局变量 
+	
+void quicksort(int left,int right)
+{
+	int i,j,temp,t;
+	if(left>right)
+		return;
+	temp=a[left];
+	i=left;
+	j=right;
+	while(i!=j)
+	{
+		while(a[j]>=temp&&i<j)	//右边的数大于等于基数并且左边的下标小于右边的下标
+		{
+				j--;			//右下标减1
+		}
+		while(a[i]<=temp&&i<j)	//左边的数小于等于基数并且左边的下标小于右边的下标
+		{
+				i++;		//左下标加1
+		}
+		if(i<j) //交换两个数在数组中的位置 
+		{
+			t=a[i];
+			a[i]=a[j];
+			a[j]=t;
+		}
+	}
+	a[left]=a[i];
+	a[i]=temp;
+	quicksort(left,i-1);   //递归处理左侧 
+	quicksort(i+1,right);  //递归处理右侧 
+} 
+ 
+int main(void)
+{
+	int i;
+	printf("输入10个数据:\n");
+	for(i=0;i<10;i++)
+	{
+		scanf("%d",&a[i]);	
+	}	
+	
+	quicksort(0,9);   //快速排序调用 
+	
+	for(i=0;i<10;i++)
+	{
+		printf("%d ",a[i]);
+	}
+	printf("\n");
+	return 0;
+}
